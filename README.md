@@ -1,32 +1,92 @@
 # PyDanmaku Engine
 
-PyDanmaku Engine is a Python library for real-time rendering of danmaku messages in user interfaces, providing a simple and easy-to-use interface for displaying danmaku messages in real time.
+PyDanmaku Engine is a Python library for building real-time bullet-screen / danmaku experiences in PySide6 applications. It includes:
+
+- a high-performance danmaku renderer for Qt widgets
+- track scheduling and item lifecycle management
+- WebSocket-based client support for receiving and sending danmaku messages in real time
+- easy customization of speed, font, background, and coverage
 
 ## Features
 
-- Launch danmaku messages in real time within user interfaces.
-- Simple and easy-to-use API for displaying danmaku messages.
+- Render danmaku items in a QWidget with smooth animation
+- Maintain multiple tracks and spawn scheduling automatically
+- Support custom text color, size, and background styling
+- Receive danmaku payloads from a server via WebSocket
+- Push local messages back to the server for broadcast scenarios
 
 ## Installation
 
-You can install PyDanmaku Engine using pip:
+Install from PyPI:
 
 ```bash
-pip install pydanmaku-engine
+pip install pydanmaku_engine
 ```
 
-## Usage
+## Requirements
 
-Here's a basic example of how to use PyDanmaku Engine:
+- Python >= 3.13
+- PySide6
+- websockets
+- qasync
+
+## Quick start
+
+The core widget is `DanmakuWidget` and the networking helper is `DanmakuClient`.
 
 ```python
-from pydanmaku_engine import DanmakuEngine
+from PySide6.QtWidgets import QApplication
+from pydanmaku_engine.client import DanmakuClient
+from pydanmaku_engine.widget import DanmakuWidget
 
-engine = DanmakuEngine(name="MyEngine")
-engine.launch("Hello, Danmaku!")
-print(engine.hello())
+app = QApplication([])
+widget = DanmakuWidget()
+widget.resize(960, 540)
+widget.show()
+
+client = DanmakuClient(
+    "ws://127.0.0.1:18765",
+    on_message=lambda text, color, size: widget.enqueue(text, color, size),
+    on_status=lambda status: None,
+)
+client.start()
+
+widget.enqueue("Hello, danmaku!", color="#FFFFFF", size=24)
+
+app.exec()
 ```
+
+## Widget usage
+
+```python
+from pydanmaku_engine.widget import DanmakuWidget
+
+widget = DanmakuWidget()
+widget.set_speed(240.0)
+widget.set_font("Microsoft YaHei", 24)
+widget.set_background("#16161f", "#0a0a0f")
+widget.enqueue("Welcome to PyDanmaku Engine!", "#FFD700", 28)
+```
+
+## Client usage
+
+```python
+from pydanmaku_engine.client import DanmakuClient
+
+client = DanmakuClient(
+    "ws://127.0.0.1:18765",
+    on_message=lambda text, color, size: print(text, color, size),
+    on_status=lambda status: print(status),
+)
+
+client.start()
+client.push("Test danmaku", color="#00FFAA", size=20)
+```
+
+## Example project
+
+A complete demo is included in the repository under `examples/quick_start.py`.
 
 ## Contributing
 
-Contributions to PyDanmaku Engine are welcome! If you find a bug or have a feature request, please open an issue on the GitHub repository. Pull requests are also encouraged.
+Contributions are welcome. If you find a bug or want to propose a feature, please open an issue or submit a pull request in the project repository.
