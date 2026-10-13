@@ -15,8 +15,7 @@ from PySide6.QtWidgets import (
   QWidget,
 )
 
-from pydanmaku_engine.client import ClientStatus, DanmakuClient
-from pydanmaku_engine.widget import DanmakuWidget
+from pydanmaku_engine import ClientStatus, DanmakuClient, DanmakuWidget
 
 HOST = "127.0.0.1"
 PORT = 18765

@@ -1,6 +1,6 @@
 [project]
 name = "pydanmaku_engine"
-version = "0.1.3rc2"
+version = "0.1.3rc3"
 description = "A Python library for real-time danmaku (bullet screen) rendering."
 readme = "README.md"
 license = "MIT"
@@ -14,7 +14,12 @@ requires = ["setuptools>=68", "cython>=3.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [dependency-groups]
-dev = ["cython>=3.3.0", "ruff>=0.17.0", "setuptools>=84.0.0"]
+dev = [
+  "cython>=3.3.0",
+  "mypy>=2.4.0",
+  "ruff>=0.17.0",
+  "setuptools>=84.0.0",
+]
 
 [tool.ruff]
 line-length = 88

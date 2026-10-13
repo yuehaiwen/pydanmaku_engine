@@ -1,26 +1,18 @@
 from PySide6.QtWidgets import QWidget
 
-from pydanmaku_engine.config import DanmakuConfig
+from pydanmaku_engine.config import DanmakuConfig as DanmakuConfig
 
 class DanmakuWidget(QWidget):
   def __init__(
-    self,
-    config: DanmakuConfig | None = None,
-    parent: QWidget | None = None,
+    self, config: DanmakuConfig | None = None, parent: QWidget | None = None
   ) -> None: ...
   def start(self) -> None: ...
   def stop(self) -> None: ...
   def push(
-    self,
-    text: str,
-    color: str | None = None,
-    size: int | None = None,
+    self, text: str, color: str | None = None, size: int | None = None
   ) -> bool: ...
   def enqueue(
-    self,
-    text: str,
-    color: str | None = None,
-    size: int | None = None,
+    self, text: str, color: str | None = None, size: int | None = None
   ) -> bool: ...
   def set_fps(self, fps: int) -> None: ...
   def set_speed(self, px_per_sec: float) -> None: ...
@@ -29,9 +21,6 @@ class DanmakuWidget(QWidget):
   def set_shadow_enabled(self, enabled: bool) -> None: ...
   def set_background(self, top: str, bottom: str) -> None: ...
   def send(
-    self,
-    text: str,
-    color: str | None = None,
-    font_size: int | None = None,
+    self, text: str, color: str | None = None, font_size: int | None = None
   ) -> bool: ...
   def clear(self) -> None: ...
