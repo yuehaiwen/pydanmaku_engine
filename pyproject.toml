@@ -7,7 +7,11 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "yuehaiwen", email = "haiwen.yue@3d-scantech.com" }]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "pyside6>=6.12.0",
+    "qasync>=0.28.0",
+    "websockets>=17.2",
+]
 
 [build-system]
 requires = ["setuptools>=68", "cython>=3.0", "wheel"]
