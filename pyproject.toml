@@ -1,0 +1,33 @@
+[project]
+name = "pydanmaku_engine"
+version = "0.1.2"
+description = "A Python library for real-time danmaku (bullet screen) rendering."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "yuehaiwen", email = "haiwen.yue@3d-scantech.com" }]
+requires-python = ">=3.13"
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=68", "cython>=3.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = ["cython>=3.3.0", "ruff>=0.17.0", "setuptools>=84.0.0"]
+
+[tool.ruff]
+line-length = 88
+indent-width = 2
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+pydanmaku_engine = ["py.typed", "*.pyi"]
+
+[tool.setuptools.exclude-package-data]
+pydanmaku_engine = ["*.c"]

@@ -1,0 +1,26 @@
+# Python-generated files
+__pycache__/
+*.py[ocd]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Caches
+.ruff_cache/
+
+# Cython build artifacts
+*.c
+*.cpp
+*.h
+*.hpp
+*.inl
+
+# IDE-specific files
+.vscode/
+
+# Other files
+uv.lock
