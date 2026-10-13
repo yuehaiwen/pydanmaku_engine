@@ -1,17 +1,13 @@
 [project]
 name = "pydanmaku_engine"
-version = "0.1.3rc1"
+version = "0.1.3rc2"
 description = "A Python library for real-time danmaku (bullet screen) rendering."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "yuehaiwen", email = "haiwen.yue@3d-scantech.com" }]
 requires-python = ">=3.13"
-dependencies = [
-    "pyside6>=6.12.0",
-    "qasync>=0.28.0",
-    "websockets>=17.2",
-]
+dependencies = ["pyside6>=6.12.0", "qasync>=0.28.0", "websockets>=17.2"]
 
 [build-system]
 requires = ["setuptools>=68", "cython>=3.0", "wheel"]

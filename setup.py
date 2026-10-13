@@ -8,15 +8,14 @@ from setuptools.command.build_py import build_py as _build_py
 SRC_ROOT = Path(__file__).parent / "src"
 
 
-def iter_compile_pairs():
-  for pyi in SRC_ROOT.rglob("*.pyi"):
-    py = pyi.with_suffix(".py")
-    if py.is_file() and py.name != "__init__.py":
-      yield py, pyi
+def iter_compile_modules():
+  for py in SRC_ROOT.rglob("*.py"):
+    if py.name != "__init__.py":
+      yield py
 
 
-COMPILE_PAIRS = list(iter_compile_pairs())
-COMPILE_PY_ABS = {os.path.abspath(str(py)) for py, _ in COMPILE_PAIRS}
+COMPILE_MODULES = list(iter_compile_modules())
+COMPILE_PY_ABS = {os.path.abspath(str(py)) for py in COMPILE_MODULES}
 
 
 def py_to_module_name(py: Path) -> str:
@@ -35,10 +34,13 @@ class build_py(_build_py):
 
 setup(
   ext_modules=cythonize(
-    [Extension(py_to_module_name(py), [str(py)]) for py, _ in COMPILE_PAIRS],
+    [Extension(py_to_module_name(py), [str(py)]) for py in COMPILE_MODULES],
     language_level="3",
     compiler_directives={"binding": True},
     build_dir="build/cython",
   ),
+  package_data={
+    "": ["*.pyi", "py.typed"],
+  },
   cmdclass={"build_py": build_py},
 )
