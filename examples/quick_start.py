@@ -15,11 +15,7 @@ from PySide6.QtWidgets import (
   QWidget,
 )
 
-from pydanmaku_engine import ClientStatus, DanmakuClient, DanmakuWidget
-
-HOST = "127.0.0.1"
-PORT = 18765
-WS_URL = f"ws://{HOST}:{PORT}"
+from pydanmaku_engine import DanmakuWidget
 
 
 class MainWindow(QWidget):
@@ -30,14 +26,6 @@ class MainWindow(QWidget):
 
     self.canvas = DanmakuWidget(parent=self)
     self.canvas.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-
-    self.client = DanmakuClient(
-      WS_URL,
-      on_message=self._on_message,
-      on_status=self._on_net_status,
-      max_text=80,
-    )
-    self.net_status = ClientStatus.STOPPED
 
     # 输入区
     self.input = QLineEdit()
@@ -61,15 +49,6 @@ class MainWindow(QWidget):
 
     self._hide_input()
 
-  async def astart(self) -> None:
-    self.client.start()
-
-  def _on_message(self, text: str, color: str, size: int) -> None:
-    self.canvas.enqueue(text, color, size)
-
-  def _on_net_status(self, s: ClientStatus) -> None:
-    self.net_status = s
-
   def _show_input(self) -> None:
     self.input.show()
     self.send_btn.show()
@@ -85,10 +64,7 @@ class MainWindow(QWidget):
     text = self.input.text().strip()
     if not text:
       return
-    if self.net_status == ClientStatus.CONNECTED:
-      self.client.push(text)
-    else:
-      self.canvas.enqueue(f"{text}", "#FF0000", 20)
+    self.canvas.enqueue(f"{text}", "#FF0000", 20)
     self._hide_input()
 
   def keyPressEvent(self, event) -> None:
@@ -114,7 +90,6 @@ class MainWindow(QWidget):
     return super().eventFilter(obj, event)
 
   def closeEvent(self, event) -> None:
-    self.client.stop()
     super().closeEvent(event)
 
 
@@ -128,7 +103,6 @@ def main() -> None:
   w.show()
 
   with loop:
-    loop.create_task(w.astart())
     loop.run_forever()
 
 

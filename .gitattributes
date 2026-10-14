@@ -1,0 +1,5 @@
+# 自动检测文本文件，并统一为 LF
+* text=auto
+
+# 明确指定 Rust 源文件使用 LF
+*.rs text eol=lf
